@@ -233,7 +233,7 @@ add_shortcode('gplusone','gp_button_shortcode');
 function gp_button_shortcode($atts,$content = null){
 	$options = get_option('bagpo_settings');
 	extract(shortcode_atts($options, $atts));
-	$options = array_merge($options,$atts);
+	$options = array_merge($options,(array)$atts);
 		if (!empty($options)){
 			
 			$b = '<g:plusone ';
