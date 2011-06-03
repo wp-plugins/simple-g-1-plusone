@@ -4,7 +4,7 @@ Donate link:http://en.bainternet.info/donations
 Tags: google +1, plus one, plus 1, button, google button
 Requires at least: 2.9.2
 Tested up to: 3.1.3
-Stable tag: 1.0
+Stable tag: 1.1
 
 This Plugin lets you add the new Google +1 button to your site or blog.
 
