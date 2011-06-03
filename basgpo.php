@@ -216,7 +216,7 @@ echo '</pre>';*/
 			$b .= 'href="'.rawurlencode(get_permalink()).'"';
 			$b .= '></g:plusone>';
 			
-			if ($options['where'] != '2'){
+			if ($options['where'] === "1"){
 				$return = $b . '<br />' . $content;
 			}else{
 				$return = $content . '<br />' . $b;
@@ -249,7 +249,7 @@ function gp_button_shortcode($atts,$content = null){
 			$b .= 'href="'.rawurlencode(get_permalink()).'"';
 			$b .= '></g:plusone>';
 			
-			if ($options['where'] != '2'){
+			if ($options['where'] == '1'){
 				$return = $b . '<br />' . $content;
 			}else{
 				$return = $content . '<br />' . $b;
