@@ -98,7 +98,8 @@ $options_panel->addDropdown(array(
 			'standard' => '1',
 			'options' => array(
 				'Before the content' => '1',
-				'After the content' => '2'
+				'After the content' => '2',
+				'Before and After' => '3'
 			)));
 $options_panel->addSubtitle(__('Button Display Settings:'));
 $options_panel->addCheckbox(array(
@@ -151,7 +152,7 @@ $options_panel->addParagraph('<ul>
 					[gplusone size="small" count="true" callback="my_callback"]
 					</pre></li>
 				</ul>');
-$options_panel->addParagraph('<ul>
+$options_panel->addParagraph('<ul style="background-color: #ffffff;">
 					<li>* Any feedback or suggestions are welcome at <a href="http://en.bainternet.info/2011/simple-google-1-plugin">plugin homepage</a></li>
 					<li>* <a href="http://wordpress.org/tags/simple-g-1-plusone?forum_id=10">Support forum</a> for hrlp and bug submittion</li>
 					<li>* Also check out <a href="http://en.bainternet.info/category/plugins">my other plugins</a></li>
@@ -217,9 +218,13 @@ echo '</pre>';*/
 			$b .= '></g:plusone>';
 			
 			if ($options['where'] === "1"){
-				$return = $b . '<br />' . $content;
-			}else{
-				$return = $content . '<br />' . $b;
+				$return = '<div class="gpone">'. $b . '</div>' . $content;
+			}
+			if ($options['where'] === "2"){
+				$return = $content . '<div class="gpone">'. $b . '</div>';
+			}
+			if ($options['where'] === "3"){
+				$return = '<div class="gpone">'. $b . '</div>' .$content .'<div class="gpone">'. $b . '</div>';
 			}
 			return $return;
 		}
