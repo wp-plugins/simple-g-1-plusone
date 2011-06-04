@@ -1,27 +1,23 @@
 === Simple Google +1 Button ===
 Contributors: bainternet 
 Donate link:http://en.bainternet.info/donations
-Tags: google +1, plus one, plus 1, button, google button
+Tags: google +1, plus one, plus 1, button, google button, share button
 Requires at least: 2.9.2
 Tested up to: 3.1.3
-Stable tag: 1.1
+Stable tag: 1.2
 
 This Plugin lets you add the new Google +1 button to your site or blog.
 
 == Description ==
 
-This Plugin lets you add the new Google +1 button to your site or blog.
+This Plugin lets you add the new Google +1 button to your site or blog automatically in your posts or pages.
 
 Main features:
 
 *	Automatically button to posts, pages.
-
 *	Easy configuration screen to show/hide count, select size , language and more.
-
 *	Use as shortcode.
-
 *	Use as template tag.
-
 *	Use in widgets.
 
 any Feedback is Welcome.
@@ -65,4 +61,7 @@ eg:
 2. Options panel
 
 == Changelog ==
+1.2 added option to show button before and after the content.
+added a div wrapper for button for better styling options.
+1.1 fixed shortcode bug.
 1.0 initial release.

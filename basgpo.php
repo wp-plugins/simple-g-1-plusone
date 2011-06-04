@@ -3,8 +3,8 @@
 Plugin Name: Simple Google +1 Button
 Plugin URI: http://en.bainternet.info
 Description: This Plugin lets you add the new google +1 button to your site or blog.
-Version: 1.1
-Author: Bainternet
+Version: 1.2
+Author: bainternet
 Author URI: http://en.bainternet.info
 */
 
