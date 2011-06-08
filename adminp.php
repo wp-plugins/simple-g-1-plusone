@@ -118,9 +118,9 @@ if (!class_exists('bagpo_AdminPage')){
      */
     public function addTitle($label) {
       $args['type'] = 'title';
-	  $args['id'] = '';
 	  $args['standard'] = '';
       $args['label'] = $label;
+	  $args['id'] = 'title'.$label;
       $this->addField($args);
     }
     
@@ -132,7 +132,7 @@ if (!class_exists('bagpo_AdminPage')){
     public function addSubtitle($label) {
       $args['type'] = 'subtitle';
       $args['label'] = $label;
-	  $args['id'] = '';
+	  $args['id'] = 'title'.$label;
 	  $args['standard'] = '';
       $this->addField($args);
     }
@@ -145,7 +145,7 @@ if (!class_exists('bagpo_AdminPage')){
     public function addParagraph($text) {
       $args['type'] = 'paragraph';
       $args['text'] = $text;
-	  $args['id'] = '';
+	  $args['id'] = 'paragraph';
 	  $args['standard'] = '';
       $this->addField($args);
     }
@@ -321,6 +321,11 @@ if (!class_exists('bagpo_AdminPage')){
      * @access private
      */
     private function addField($args) {
+	  $default = array(
+        'standard' => '',
+		'id' => ''
+      );
+      $args = array_merge($default, $args);
       $this->buildOptions($args);
       $this->boxes[] = $args;
     }
@@ -332,14 +337,16 @@ if (!class_exists('bagpo_AdminPage')){
     private function buildOptions($args) {
       $default = array(
         'standard' => '',
-    'id' => ''
+		'id' => ''
       );
       $args = array_merge($default, $args);
       $saved = get_option($this->args['option_group']);
-      if($saved[$args['id']] === false) {
-        $saved[$args['id']] = $args['standard'];
-        update_option($this->args['option_group'],$saved);
-      }
+	  if (isset($saved[$args['id']])){
+		  if($saved[$args['id']] === false) {
+			$saved[$args['id']] = $args['standard'];
+			update_option($this->args['option_group'],$saved);
+		  }
+	  }
     }
     
     /**
@@ -376,7 +383,9 @@ if (!class_exists('bagpo_AdminPage')){
             $this->table = false;
           }
         }
-        $data = $saved[$box['id']];
+		if (isset($saved[$box['id']])){
+			$data = $saved[$box['id']];
+		}
         if (!isset($data)){
           $data = $box['standard'];
         }
@@ -601,42 +610,47 @@ if (!class_exists('bagpo_AdminPage')){
      * @access private
      */
     private function save() {
-      $saved  = get_option($this->args['option_group']);
-      $post_data = $_POST[$this->args['option_group']];
-      foreach($this->boxes as $box) {
-		if($box['type'] != 'title' AND $box['type'] != 'paragraph' AND $box['type'] != 'subtitle'){
-			$data = $post_data[$box['id']];
-			if($box['type'] == 'editor') {
-			  $data = wptexturize(wpautop($data));
+		$saved  = get_option($this->args['option_group']);
+		$post_data = $_POST[$this->args['option_group']];
+		foreach($this->boxes as $box) {
+			if($box['type'] != 'title' AND $box['type'] != 'paragraph' AND $box['type'] != 'subtitle' ){
+					if (isset($post_data[$box['id']])){
+						$data = $post_data[$box['id']];
+					}else{
+						$data = null;
+					}
+					if($box['type'] == 'editor') {
+					  $data = wptexturize(wpautop($data));
+					}
+					if($box['type'] == 'checkbox') {
+					  if($data != 'true') {
+						$data = 'false';
+					  }
+					}
+					if($box['type'] == 'upload') {
+					  if($_FILES[$this->args['option_group'][$box['id']]]['size'] > 0) {
+						$data = wp_handle_upload($_FILES[$this->args['option_group'][$box['id']]], array('test_form' => false));
+					  } else {
+						$data = get_option($this->args['option_group'][$box['id']]);
+					  }
+					  $data['title'] = $_POST[$this->args['option_group'][$box['id']].'_title'];
+					}
+					if($box['type'] == 'slider') {
+					  if(strpos($data, '-') !== false) {
+						$data = explode('-',$data);
+					  }
+					}
+					if($box['type'] == 'date') {
+					  $date = explode('/', $data);
+					  if(isset($date[2])) $data = mktime(0,0,0,$date[0],$date[1],$date[2]);
+					}
+					$saved[$box['id']] = $data;
+				
+				
 			}
-			if($box['type'] == 'checkbox') {
-			  if($data != 'true') {
-				$data = 'false';
-			  }
-			}
-			if($box['type'] == 'upload') {
-			  if($_FILES[$this->args['option_group'][$box['id']]]['size'] > 0) {
-				$data = wp_handle_upload($_FILES[$this->args['option_group'][$box['id']]], array('test_form' => false));
-			  } else {
-				$data = get_option($this->args['option_group'][$box['id']]);
-			  }
-			  $data['title'] = $_POST[$this->args['option_group'][$box['id']].'_title'];
-			}
-			if($box['type'] == 'slider') {
-			  if(strpos($data, '-') !== false) {
-				$data = explode('-',$data);
-			  }
-			}
-			if($box['type'] == 'date') {
-			  $date = explode('/', $data);
-			  if(isset($date[2])) $data = mktime(0,0,0,$date[0],$date[1],$date[2]);
-			}
-			$saved[$box['id']] = $data;
 		}
-      }
-      update_option($this->args['option_group'], $saved);
-
-    }
+		update_option($this->args['option_group'], $saved);	
+	}
     
     /**
      * Loads all the script and css files needed

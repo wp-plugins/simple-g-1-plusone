@@ -3,7 +3,7 @@
 Plugin Name: Simple Google +1 Button
 Plugin URI: http://en.bainternet.info
 Description: This Plugin lets you add the new google +1 button to your site or blog.
-Version: 1.2
+Version: 1.3
 Author: bainternet
 Author URI: http://en.bainternet.info
 */
@@ -152,11 +152,11 @@ $options_panel->addParagraph('<ul>
 					[gplusone size="small" count="true" callback="my_callback"]
 					</pre></li>
 				</ul>');
-$options_panel->addParagraph('<ul style="background-color: #ffffff;">
-					<li>* Any feedback or suggestions are welcome at <a href="http://en.bainternet.info/2011/simple-google-1-plugin">plugin homepage</a></li>
-					<li>* <a href="http://wordpress.org/tags/simple-g-1-plusone?forum_id=10">Support forum</a> for hrlp and bug submittion</li>
-					<li>* Also check out <a href="http://en.bainternet.info/category/plugins">my other plugins</a></li>
-					<li>* And if you like my work <a href="http://en.bainternet.info/donations">make a donation</a></li>
+$options_panel->addParagraph('<ul style="list-style: square inside none; width: 300px; font-weight: bolder; padding: 20px; border: 2px solid; background-color: #FFFFE0; border-color: #E6DB55; position: fixed;  right: 120px; top: 150px;">
+					<li> Any feedback or suggestions are welcome at <a href="http://en.bainternet.info/2011/simple-google-1-plugin">plugin homepage</a></li>
+					<li> <a href="http://wordpress.org/tags/simple-g-1-plusone?forum_id=10">Support forum</a> for help and bug submittion</li>
+					<li> Also check out <a href="http://en.bainternet.info/category/plugins">my other plugins</a></li>
+					<li> And if you like my work <a  style="color: #FC000D;" href="http://en.bainternet.info/donations">make a donation</a></li>
 				</ul>');
 //page/post/cpt/cat/tag/tax hook
 add_filter('the_content','show_button');
